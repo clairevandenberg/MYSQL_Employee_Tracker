@@ -14,7 +14,7 @@ const connection = mysql.createConnection ({
     
     port: 3306, 
     user: "root",
-    password: " ",
+    password: " password ",
     database: "employeeTrackerDB"
 });
 
@@ -29,9 +29,10 @@ connection.query = util.promisify(connection.query);
 function start () {
     inquirer 
         .prompt ({
+        name: "action",
+        type: "rawlist",
         message: "What would you like to do?",
-        type: "choice",
-        name: [
+        choices: [
         "View All Employees By Department",
         "View All Employees By Manager",
         "Add Employee",
@@ -41,28 +42,104 @@ function start () {
         "View All Roles"
                 ]
             })
-  .then (function(answer){
-       connection.query(
-       {
 
-//add database stuff ..... 
-fucntion(err) {
-if (err) throw err;
-console.log("Hello")
-     } 
-    },
-         function (err) {
-          if (err) throw err;
-            console.log("Sucessful completed");
-            start ();
-             }
-         );
-        }
-       else {
-           console.log("you werre unsucessful");
-            start ();
-         }
+  .then (function(employeeQuestions) {
+      switch (employeeQuestions.action) {
+            case "View All Employees By Department":
+              employeeDepartment ();
+              break;
+        
+            case "View All Employees By Manager":
+                employeeManager();
+                break;
 
-  )};
+            case "Add Employee":
+                addEmployee();
+                break; 
 
- console.log ("move up and down to reveal more choices"); 
+            case "Remove Employee":
+                employeeRemove();
+                break;
+            
+            case "Update Employee Roles":
+                employeeRoles();
+                break;  
+                
+            case "View All Roles":
+                allEmployeeRoles();
+                break;  
+  }
+    });
+}
+
+function employeeDepartment () {
+    inquirer
+    .prompt({
+        name:"employeeDepartment",
+        type: "choice",
+        message:" "
+    });
+    start ()
+}
+
+
+function employeeManager () {
+    inquirer
+    .prompt({
+        name:"employeeManager",
+        type: "choice",
+        message:"Which employee's manager do you want to set as manager for the selected employee?"
+    })
+
+.then(function(answer) {
+    var query = "Which employee do you want to set as manager for the selected employee"
+});
+start ()
+}
+
+function employeeRemove () {
+    inquirer
+    .prompt({
+        name:"employeeRemove",
+        type: "choice",
+        message:"Which employee do you want to remove?"
+    });
+    start ()
+}
+
+function addEmployee () {
+    inquirer
+    .prompt({
+        name:"employeeAdd",
+        type: "choice",
+        message:"What is the employee's first name?"
+    })
+
+    .then(function(answer) {
+        var query = "What is the employee's role?"
+    });
+    start ()
+}
+
+function employeeRoles () {
+    inquirer
+    .prompt({
+        name:"employeeRoles",
+    });
+    start ()
+}
+
+function allEmployeeRoles () {
+    inquirer
+    .prompt({
+        name:"allEmployeeRoles",
+        type: "choice",
+        message:" "
+    });
+    start ()
+}
+
+// function (err) {
+//           if (err) throw err;
+//             console.log("Sucessful completed");
+// };

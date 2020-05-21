@@ -15,7 +15,6 @@ CREATE TABLE roles (
   salary DECIMAL(10,0) DEFAULT NULL,
   department_id int DEFAULT NULL,
   PRIMARY KEY (id),
-  KEY department_id_idx (department_id),
   CONSTRAINT department_id FOREIGN KEY (department_id) REFERENCES departments (id)
 );
 
